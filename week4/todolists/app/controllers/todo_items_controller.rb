@@ -1,27 +1,28 @@
 class TodoItemsController < ApplicationController
+  before_action :set_todo_list
   before_action :set_todo_item, only: [:show, :edit, :update, :destroy]
 
-  # GET /todo_items
-  # GET /todo_items.json
-  def index
-    @todo_items = TodoItem.all
-  end
+  # GET /todo_lists/:todo_list_id/todo_items
+  # GET /todo_lists/:todo_list_id/todo_items.json
+  # def index
+  #   @todo_items = TodoItem.all
+  # end
 
-  # GET /todo_items/1
-  # GET /todo_items/1.json
+  # GET /todo_lists/:todo_list_id/todo_items/:id
+  # GET /todo_lists/:todo_list_id/todo_items/:id.json
   def show
   end
 
-  # GET /todo_items/new
+  # GET /todo_lists/:todo_list_id/todo_items/new
   def new
     @todo_item = TodoItem.new
   end
 
-  # GET /todo_items/1/edit
+  # GET /todo_lists/:todo_list_id/todo_items/:id/edit(.:format)
   def edit
   end
 
-  # POST /todo_items
+  # POST /todo_lists/:todo_list_id/todo_items/:id
   # POST /todo_items.json
   def create
     @todo_item = TodoItem.new(todo_item_params)
@@ -37,8 +38,8 @@ class TodoItemsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /todo_items/1
-  # PATCH/PUT /todo_items/1.json
+  # PATCH/PUT /todo_lists/:todo_list_id/todo_items/:id
+  # PATCH/PUT /todo_lists/:todo_list_id/todo_items/:id.json
   def update
     respond_to do |format|
       if @todo_item.update(todo_item_params)
@@ -51,8 +52,8 @@ class TodoItemsController < ApplicationController
     end
   end
 
-  # DELETE /todo_items/1
-  # DELETE /todo_items/1.json
+  # DELETE /todo_lists/:todo_list_id/todo_items/:id
+  # DELETE /todo_lists/:todo_list_id/todo_items/:id.json
   def destroy
     @todo_item.destroy
     respond_to do |format|
@@ -62,9 +63,13 @@ class TodoItemsController < ApplicationController
   end
 
   private
+
+    def set_todo_list
+      @todo_list - TodoList.find(params[:todo_list_id])
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_todo_item
-      @todo_item = TodoItem.find(params[:id])
+      @todo_item = TodoList.todo_items.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
